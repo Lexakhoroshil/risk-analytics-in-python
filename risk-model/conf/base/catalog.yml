@@ -1,0 +1,303 @@
+# https://www.kaggle.com/competitions/GiveMeSomeCredit/data
+01_raw_development:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/cs-training.csv
+
+01_raw_validation:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/cs-test.csv
+
+01_raw_example_to_submit:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/sampleEntry.csv
+
+# 01_preprocessing pipeline data: preprocessing stages
+
+## fix index
+02_intermediate_development:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/df_dev.pkl
+
+02_intermediate_validation:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/df_validation.pkl
+
+## new features
+
+04_feature_development:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/df_dev.pkl
+
+04_feature_validation:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/df_validation.pkl
+
+## train/test & WOE-binning
+
+05_model_input_X_train:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_train.pkl
+
+05_model_input_X_test:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_test.pkl
+
+05_model_input_y_train:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/y_train.pkl
+
+05_model_input_y_test:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/y_test.pkl
+### long list
+05_model_input_X_train_woe:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_train_woe.pkl
+
+05_model_input_X_test_woe:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_test_woe.pkl
+
+05_model_input_development_woe:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/df_dev_woe.pkl
+
+05_model_input_validation_woe:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/df_validation_woe.pkl
+
+### short list
+
+05_model_input_X_train_woe_short_list:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_train_woe_short_list.pkl
+
+05_model_input_X_test_woe_short_list:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_test_woe_short_list.pkl
+
+05_model_input_development_woe_short_list:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/df_dev_woe_short_list.pkl
+
+05_model_input_validation_woe_short_list:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/df_validation_woe_short_list.pkl
+
+
+# 02_modeling pipeline data: modeling stages and final model
+
+## model files
+
+06_models_feature_selection:
+  type: pickle.PickleDataset
+  filepath: data/06_models/sfs.pkl
+
+06_models_binning:
+  type: pickle.PickleDataset
+  filepath: data/06_models/bp.pkl
+
+06_models_binning_short_list:
+  type: pickle.PickleDataset
+  filepath: data/06_models/bp_short_list.pkl
+
+06_models_lr:
+  type: pickle.PickleDataset
+  filepath: data/06_models/lr.pkl
+
+06_models_scorecard:
+  type: pickle.PickleDataset
+  filepath: data/06_models/scorecard.pkl
+
+## scored files
+
+07_model_output_sample_to_kaggle:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/sampleEntry.csv
+
+07_model_output_development_scored:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/df_dev_scored.pkl
+
+07_model_output_validation_scored:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/df_validation_scored.pkl
+
+# 03_reporting pipeline data: reports
+
+08_reporting_variables_binning_table:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_variables_binning.xlsx
+  save_args:
+    index: True
+    sheet_name: Sheet1
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_variables_binning_table_short_list:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_variables_binning_short_list.xlsx
+  save_args:
+    index: True
+    sheet_name: Sheet1
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_variables_summary_table:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_variables_summary.xlsx
+  save_args:
+    sheet_name: Sheet1
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_variables_summary_table_short_list:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_variables_summary_short_list.xlsx
+  save_args:
+    sheet_name: Sheet1
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_scorecard_table:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_feature_correlation:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_lr_features_correlation.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_feature_correlation_plot:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/plot_model_feature_correlation.jpeg
+
+08_reporting_model_scorecard_feature_coefs:
+  type: tracking.JSONDataset
+  filepath: data/08_reporting/model_scorecard_features_coefs.json
+
+08_reporting_model_scorecard_feature_selection_plot:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/plot_model_scorecard_feature_selection.jpeg
+
+08_reporting_statistics_monitoring_train_test:
+  type: pickle.PickleDataset
+  filepath: data/08_reporting/scorecard_monitoring_train_test.pkl
+
+
+08_reporting_statistics_monitoring_dev_valid:
+  type: pickle.PickleDataset
+  filepath: data/08_reporting/scorecard_monitoring_dev_valid.pkl
+
+#
+
+08_reporting_model_scorecard_features_psi_detailed_train_test:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard_features_psi_detailed_train_test.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_scorecard_features_psi_summary_train_test:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard_features_psi_summary_train_test.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+
+08_reporting_model_scorecard_features_psi_detailed_dev_valid:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard_features_psi_detailed_dev_valid.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_scorecard_features_psi_summary_dev_valid:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard_features_psi_summary_dev_valid.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_scorecard_psi_summary_train_test:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard_psi_summary_train_test.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_scorecard_psi_summary_dev_valid:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard_psi_summary_dev_valid.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_scorecard_psi_summary_train_test_plot:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/plot_model_scorecard_psi_summary_train_test.jpeg
+
+08_reporting_model_scorecard_psi_summary_dev_valid_plot:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/plot_model_scorecard_psi_summary_dev_valid.jpeg
+
+08_reporting_model_scorecard_statistical_tests:
+  type: pandas.ExcelDataset
+  filepath: data/08_reporting/table_model_scorecard_statistical_tests.xlsx
+  save_args:
+    sheet_name: Sheet1  
+  metadata:
+    kedro-viz:
+      preview_args:
+          nrows: 1000
+
+08_reporting_model_scorecard_roc_auc_train_test_plot:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/plot_model_scorecard_roc_auc_train_test.jpeg
+
+08_reporting_model_scorecard_ks_plot:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/plot_model_scorecard_ks_train_test.jpeg
+
+
+08_reporting_model_scorecard_coefs_plot:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/plot_model_scorecard_coefs.jpeg

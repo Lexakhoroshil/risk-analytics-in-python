@@ -1,0 +1,8 @@
+services:
+  p310:
+    build: env/
+    ports:
+      - 4141:4141
+    volumes:
+      - ./:/docker_disk
+    tty: true

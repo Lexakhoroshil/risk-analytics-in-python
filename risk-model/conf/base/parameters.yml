@@ -1,0 +1,61 @@
+cols:
+  col_raw_id: 'Unnamed: 0'
+  col_final_id: 'Id'
+  col_final_prediction: 'Prediction'
+  cols_variables: ['RevolvingUtilizationOfUnsecuredLines', 
+                    'age',
+                    'NumberOfTime30-59DaysPastDueNotWorse', 
+                    'DebtRatio', 
+                    'MonthlyIncome', 
+                    'NumberOfOpenCreditLinesAndLoans', 
+                    'NumberOfTimes90DaysLate', 
+                    'NumberRealEstateLoansOrLines', 
+                    'NumberOfTime60-89DaysPastDueNotWorse', 
+                    'NumberOfDependents', 
+                    'Debt', 
+                    'NumberOfTime30+DaysPastDueNotWorse', 
+                    'avg_debt_per_credit', 
+                    'feat_killer']
+
+  cols_categorial: ['feat_killer']
+  cols_to_manual_binning_object: ['feat_killer']
+  col_target: 'SeriousDlqin2yrs'
+
+
+global_parameters:
+  seed: 1234
+  test_ratio: 0.33
+  
+binning_parameters:
+  metric: 'woe'
+  metric_missing: 'empirical'
+
+feature_selection_parameters:
+  selection_feature_metric: 'roc_auc'
+  selection_forward: True
+
+manual_binning:
+  splits: {'feat_killer': 
+  [
+    [
+          [ 'flag_bad_utilization=0&flag_bad_dlq=0&flag_bad_noopencreds=0&' ],
+
+          [ 'flag_bad_utilization=0&flag_bad_dlq=0&flag_bad_noopencreds=1&', 
+            'flag_bad_utilization=1&flag_bad_dlq=0&flag_bad_noopencreds=0&', 
+            'flag_bad_utilization=1&flag_bad_dlq=0&flag_bad_noopencreds=1&' ],
+
+          [ 'flag_bad_utilization=0&flag_bad_dlq=1&flag_bad_noopencreds=0&' ],
+
+          [ 'flag_bad_utilization=0&flag_bad_dlq=1&flag_bad_noopencreds=1&', 
+            'flag_bad_utilization=1&flag_bad_dlq=1&flag_bad_noopencreds=0&', 
+            'flag_bad_utilization=1&flag_bad_dlq=1&flag_bad_noopencreds=1&' ]
+    ],
+          [True,  True, True, True]
+  ]
+          }
+
+monitoring_parameters:
+  psi_n_bins: 10
+  psi_method: 'cart'
+  inplace_y_actual: 0
+  none_type: 'None'
